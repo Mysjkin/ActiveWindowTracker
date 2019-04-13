@@ -1,0 +1,11 @@
+[package]
+name = "tracker"
+version = "0.1.0"
+authors = ["mysjkin <iarogolo@gmail.com>"]
+edition = "2018"
+build  = "build.rs"
+
+[dependencies]
+libxdo-sys = "0.11.0"
+x11 = "2.12.1"
+libc = "0.2.20"
