@@ -1,8 +1,9 @@
+
 extern crate libxdo_sys;
 extern crate libc;
 extern crate sysinfo;
 
-mod db_stuff;
+use super::DB;
 
 use libxdo_sys::*;
 use std::thread;
@@ -46,7 +47,9 @@ pub fn track_active_windows(){
         let mut has_moved = true;
         while true{
             let (ret_has_moved, ret_x, ret_y) = poll_mouse_movement(xdo, curr_x, curr_y);
-            has_moved = ret_has_moved; curr_x = ret_x; curr_y = ret_y;
+            has_moved = ret_has_moved; 
+            curr_x = ret_x; 
+            curr_y = ret_y;
             println!("{}, {}, {}", has_moved, curr_x, curr_y);
             let quater_sec = Duration::from_millis(250);
             thread::sleep(quater_sec);
