@@ -36,11 +36,14 @@ pub fn add_new_entry(conn : &Connection, p_name : String, from : DateTime<Local>
     Ok(())
 }
 
+// TODO: optimize sql (not important right now).
 pub fn update(conn : &Connection) -> Result<()>{
-    let mut stmt = conn.prepare("Select p.name, sum 
-                                (Cast((JulianDay(timeto) - JulianDay(timefrom)) * 24 * 60 * 60 As Integer)) 
+    let mut stmt = conn.prepare("Select p.name, sum(Cast((JulianDay(timeto) - JulianDay(timefrom)) * 24 * 60 As Integer)) 
                                 from Processes p
-	                            where timefrom < timeto
+	                            where (timefrom < timeto 
+		                            and (timefrom > (select d.lastupdated from DURATIONS d
+				                            where d.name == p.name)))
+			                            or p.name not in (select d.name from DURATIONS d)
 	                            group by p.name;")?;
     let processes = stmt.query_map(params![], |row| {
         Ok(AggregatedTimes {

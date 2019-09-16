@@ -10,3 +10,15 @@
 **/*.rs.bk
 
 /Tracker/src/tracker.db
+
+/TrackerGUI/CMakeFiles
+
+/TrackerGUI/gui_autogen
+
+/TrackerGUI/cmake_install.cmake
+
+/TrackerGUI/CMakeCache.txt
+
+
+
+

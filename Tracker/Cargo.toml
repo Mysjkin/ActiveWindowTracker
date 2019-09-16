@@ -1,7 +1,7 @@
 [package]
 name = "tracker"
 version = "0.1.0"
-authors = ["mysjkin <iarogolo@gmail.com>"]
+authors = ["Iaro"]
 edition = "2018"
 build  = "build.rs"
 
@@ -12,3 +12,8 @@ rusqlite = "0.17.0"
 chrono = "0.4.6"
 sysinfo = "0.8.2"
 azul = { git = "https://github.com/maps4print/azul" }
+libappindicator = "0.4.0"
+gtk-sys = "0.6.0"
+gtk = "0.4.0"
+app_dirs = "1.2.1"
+fs_extra = "1.1.0"
