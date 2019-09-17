@@ -1,2 +1,2 @@
 # ProcessesOverview
-Tracks active windows
+Track active windows
