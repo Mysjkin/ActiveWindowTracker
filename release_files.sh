@@ -1,13 +1,19 @@
-mkdir ProcessTracker;
+DIR="ProcessTracker"
 
-cp LICENSE ProcessTracker;
+if ! [ -d "$DIR" ]; then
+  mkdir $DIR;
+fi
 
-cp Tracker/target/release/tracker ProcessTracker;
+cp LICENSE $DIR;
 
-cp Tracker/src/tracker.db ProcessTracker;
+cp Tracker/target/release/tracker $DIR;
 
-cp TrackerGUI/gui ProcessTracker;
+if ! [ -f "$DIR/tracker.db"  ] ; then
+  cp Tracker/src/tracker.db $DIR
+fi
 
-cp -r TrackerGUI/images ProcessTracker;
+cp TrackerGUI/gui $DIR;
 
-cp run_tracker_shit.sh ProcessTracker;
+cp -r TrackerGUI/images $DIR;
+
+cp run_tracker_shit.sh $DIR;
