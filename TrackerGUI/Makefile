@@ -136,6 +136,33 @@ gui_autogen/fast:
 	$(MAKE) -f CMakeFiles/gui_autogen.dir/build.make CMakeFiles/gui_autogen.dir/build
 .PHONY : gui_autogen/fast
 
+dbaccess.o: dbaccess.cpp.o
+
+.PHONY : dbaccess.o
+
+# target to build an object file
+dbaccess.cpp.o:
+	$(MAKE) -f CMakeFiles/gui.dir/build.make CMakeFiles/gui.dir/dbaccess.cpp.o
+.PHONY : dbaccess.cpp.o
+
+dbaccess.i: dbaccess.cpp.i
+
+.PHONY : dbaccess.i
+
+# target to preprocess a source file
+dbaccess.cpp.i:
+	$(MAKE) -f CMakeFiles/gui.dir/build.make CMakeFiles/gui.dir/dbaccess.cpp.i
+.PHONY : dbaccess.cpp.i
+
+dbaccess.s: dbaccess.cpp.s
+
+.PHONY : dbaccess.s
+
+# target to generate assembly for a file
+dbaccess.cpp.s:
+	$(MAKE) -f CMakeFiles/gui.dir/build.make CMakeFiles/gui.dir/dbaccess.cpp.s
+.PHONY : dbaccess.cpp.s
+
 gui_autogen/EWIEGA46WW/qrc_systray.o: gui_autogen/EWIEGA46WW/qrc_systray.cpp.o
 
 .PHONY : gui_autogen/EWIEGA46WW/qrc_systray.o
@@ -254,6 +281,9 @@ help:
 	@echo "... gui"
 	@echo "... edit_cache"
 	@echo "... gui_autogen"
+	@echo "... dbaccess.o"
+	@echo "... dbaccess.i"
+	@echo "... dbaccess.s"
 	@echo "... gui_autogen/EWIEGA46WW/qrc_systray.o"
 	@echo "... gui_autogen/EWIEGA46WW/qrc_systray.i"
 	@echo "... gui_autogen/EWIEGA46WW/qrc_systray.s"

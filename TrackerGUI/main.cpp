@@ -2,6 +2,9 @@
 
 #include <QMessageBox>
 #include "traywindow.h"
+#include "dbaccess.h"
+
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +23,17 @@ int main(int argc, char *argv[])
     QApplication::setQuitOnLastWindowClosed(false);
 
     TrayWindow window;
-    //window.show();
+
+    DbAccess* db = new DbAccess("tracker.db", "QSQLITE");
+    db->init();
+
+    try{
+        db->updateDurations();
+    }
+    catch (const char* msg){
+        std::cerr << msg << "\n";
+    }
+    delete db;
+
     return app.exec();
 }

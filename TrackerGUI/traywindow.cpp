@@ -11,24 +11,12 @@
 #include <QVBoxLayout>
 
 TrayWindow::TrayWindow()
-{   
-    //createIconGroupBox();
-    //createMessageGroupBox();
-
-    //iconLabel->setMinimumWidth(durationLabel->sizeHint().width());
-
+{
     createActions();
     createTrayIcon();
 
-    /*connect(showMessageButton, &QAbstractButton::clicked, this, &TrayWindow::showMessage);
-    connect(showIconCheckBox, &QAbstractButton::toggled, trayIcon, &QSystemTrayIcon::setVisible);
-    connect(iconComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &TrayWindow::setIcon);*/
-    //connect(trayIcon, &QSystemTrayIcon::messageClicked, this, &TrayWindow::messageClicked);
-    //connect(trayIcon, &QSystemTrayIcon::activated, this, &TrayWindow::iconActivated);
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    
+
     QIcon icon = QIcon("./images/test.png");
     trayIcon->setIcon(icon);
     trayIcon->show();

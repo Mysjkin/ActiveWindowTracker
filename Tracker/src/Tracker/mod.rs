@@ -41,7 +41,7 @@ fn pause_until_movement(xdo : *const Struct_xdo, curr_x : i32, curr_y : i32){
     let mut is_afk = true;
     let quater_sec = std::time::Duration::from_secs(1);
     while is_afk{
-        println!("app currently paused. Move cursor to unpause");
+        //println!("app currently paused. Move cursor to unpause");
         let (ret_has_moved, ret_x, ret_y) = poll_mouse_movement(xdo, curr_x, curr_y);
         if ret_has_moved{
             is_afk = false;
@@ -62,8 +62,9 @@ fn get_process_name(xdo : *const Struct_xdo) -> String{
         // xdo_get_active_window takes alot of time.
         let mut get_window_result = xdo_get_active_window(xdo, act_win);
         let sleep_before_attempts = std::time::Duration::from_millis(50);
+        let tries_before_panic = 5;
         while get_window_result != 0{
-            if tries == 3{
+            if tries == tries_before_panic{
                 panic!("Failed to get active window");
             }
             get_window_result = xdo_get_active_window(xdo, act_win);
