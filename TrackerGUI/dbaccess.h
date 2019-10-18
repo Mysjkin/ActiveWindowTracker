@@ -8,9 +8,8 @@
 
 #include <iostream>
 
-struct duration
+struct Duration
 {
-    int id;
     std::string name;
     std::string lastUpdated;
     int duration;
@@ -30,7 +29,7 @@ public:
 
     void updateDurations();
     
-    std::vector<duration> getAllDurations();
+    std::vector<Duration> getAllDurations();
 
     ~DbAccess();
 };

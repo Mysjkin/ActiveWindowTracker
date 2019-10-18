@@ -4,6 +4,7 @@
 #include "traywindow.h"
 #include "dbaccess.h"
 
+#include <vector>
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -26,9 +27,12 @@ int main(int argc, char *argv[])
 
     DbAccess* db = new DbAccess("tracker.db", "QSQLITE");
     db->init();
-
     try{
         db->updateDurations();
+        std::vector<Duration> durs = db->getAllDurations();
+        for (auto i = durs.begin(); i != durs.end(); ++i){
+            std::cout << "Result: " << i->name << " " << i->duration << std::endl;
+        }
     }
     catch (const char* msg){
         std::cerr << msg << "\n";

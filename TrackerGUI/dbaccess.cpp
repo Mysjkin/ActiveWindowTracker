@@ -23,10 +23,10 @@ void DbAccess::updateDurations(){
                                   "group by p.name;";
     bool prepared = queryGet.prepare(QString::fromStdString(selectProcAsDur));
     if (!prepared){
-        throw "Could not prepare GET durations sql command";
+        throw "Could not prepare" + selectProcAsDur + " sql command";
     }
     if(!queryGet.exec()){
-        throw "Could not execute GET durations sql command";
+        throw "Could not execute " + selectProcAsDur + " sql command";
     }
     
     std::string insertDurs = "INSERT OR REPLACE INTO DURATIONS (id, name, lastupdated, duration) "
@@ -46,17 +46,36 @@ void DbAccess::updateDurations(){
         queryInsert.bindValue(":lastupdated", nowQStr);
         queryInsert.bindValue(":duration", duration);
         if (!prepared){
-            throw "Could not prepare INSERT durations sql command";
+            throw "Could not prepare " + insertDurs + " sql command";
         }
         if(!queryInsert.exec()){
-            throw "Could not execute INSERT durations sql command";
+            throw "Could not execute " + insertDurs + " sql command";
         }
         queryInsert.clear();
     }
     
 }
 
-std::vector<duration> DbAccess::getAllDurations(){
-    std::vector<duration> v;
+std::vector<Duration> DbAccess::getAllDurations(){
+    std::vector<Duration> v;
+    QSqlQuery queryGet;
+    std::string selectDurs = "Select name, lastupdated, duration from DURATIONS;";
+
+    bool prepared = queryGet.prepare(QString::fromStdString(selectDurs));
+    if (!prepared){
+        throw "Could not prepare " + selectDurs + " sql command";
+    }
+    if (!queryGet.exec()){
+        throw "Could not execute " + selectDurs + " sql command";
+    }
+    
+    while(queryGet.next()){
+        std::string name = queryGet.value(0).toString().toStdString();
+        std::string lastupdated = queryGet.value(1).toString().toStdString();
+        int duration = queryGet.value(2).toString().toInt();
+        std::string category = queryGet.value(3).toString().toStdString();
+        Duration d = {name, lastupdated, duration};
+        v.push_back(d);
+    }   
     return v;
 }
