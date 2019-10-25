@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     TrayWindow window;
 
-    DbAccess* db = new DbAccess("tracker.db", "QSQLITE");
+    /*DbAccess* db = new DbAccess("tracker.db", "QSQLITE");
     db->init();
     try{
         db->updateDurations();
@@ -38,6 +38,6 @@ int main(int argc, char *argv[])
         std::cerr << msg << "\n";
     }
     delete db;
-
+    */
     return app.exec();
 }

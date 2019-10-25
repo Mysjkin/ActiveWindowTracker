@@ -10,7 +10,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-TrayWindow::TrayWindow()
+TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
 {
     createActions();
     createTrayIcon();
@@ -24,10 +24,11 @@ TrayWindow::TrayWindow()
 
     setWindowIcon(icon);
     
-    setLayout(mainLayout);
+    //setLayout(mainLayout);
+    ui.setupUi(this);
 
     setWindowTitle(tr("Process Tracker"));
-    resize(1080, 720);
+    resize(720, 480);
 }
 
 void TrayWindow::createActions()
@@ -35,11 +36,8 @@ void TrayWindow::createActions()
     minimizeAction = new QAction(tr("Mi&nimize"), this);
     connect(minimizeAction, &QAction::triggered, this, &QWidget::hide);
 
-    maximizeAction = new QAction(tr("Ma&ximize"), this);
-    connect(maximizeAction, &QAction::triggered, this, &QWidget::showMaximized);
-
-    restoreAction = new QAction(tr("&Restore"), this);
-    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
+    showAction = new QAction(tr("&Show"), this);
+    connect(showAction, &QAction::triggered, this, &QWidget::showNormal);
 
     quitAction = new QAction(tr("&Quit"), this);
     connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
@@ -49,8 +47,7 @@ void TrayWindow::createTrayIcon()
 {
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(minimizeAction);
-    trayIconMenu->addAction(maximizeAction);
-    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addAction(showAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
 

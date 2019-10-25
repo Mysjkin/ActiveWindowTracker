@@ -6,6 +6,9 @@
 #ifndef QT_NO_SYSTEMTRAYICON
 
 #include <QDialog>
+#include <QtWidgets>
+
+#include "ui_traywindow.h"
 
 class QAction;
 class QLabel;
@@ -16,7 +19,7 @@ class TrayWindow : public QDialog
     Q_OBJECT
 
 public:
-    TrayWindow();
+    TrayWindow(QDialog *parent = nullptr);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -26,10 +29,10 @@ private:
     void createTrayIcon();
 
     QLabel *iconLabel;
+    Ui::TrayWindow ui;
 
     QAction *minimizeAction;
-    QAction *maximizeAction;
-    QAction *restoreAction;
+    QAction *showAction;
     QAction *quitAction;
 
     QSystemTrayIcon *trayIcon;
