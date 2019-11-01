@@ -2,14 +2,6 @@
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
-#include <QAction>
-#include <QCoreApplication>
-#include <QCloseEvent>
-#include <QLabel>
-#include <QMenu>
-#include <QPushButton>
-#include <QVBoxLayout>
-
 TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
 {
     createActions();
@@ -24,11 +16,43 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
 
     setWindowIcon(icon);
     
-    //setLayout(mainLayout);
     ui.setupUi(this);
 
     setWindowTitle(tr("Process Tracker"));
     resize(720, 480);
+    
+    DbAccess* db = new DbAccess("tracker.db", "QSQLITE");
+
+    if(!db->init())
+        QMessageBox::critical(this, "Unable to load database", "Unable to open the database");
+
+    model = new QSqlRelationalTableModel(ui.durationTable);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model->setTable("durations");
+
+    model->setHeaderData(model->fieldIndex("name"), Qt::Horizontal, tr("Process name"));
+    model->setHeaderData(model->fieldIndex("lastupdated"), Qt::Horizontal, tr("Last updated"));
+    model->setHeaderData(model->fieldIndex("duration"), Qt::Horizontal, tr("Duration"));
+    model->setHeaderData(model->fieldIndex("category"), Qt::Horizontal, tr("Category"));
+    
+    if (!model->select()){
+        QMessageBox::critical(this, "Unable to load database", model->lastError().text());
+        return;
+    }
+
+    ui.durationTable->setModel(model);
+    ui.durationTable->setColumnHidden(model->fieldIndex("id"), true);
+    ui.durationTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    QDataWidgetMapper *mapper = new QDataWidgetMapper(this);
+    mapper->setModel(model);
+    mapper->addMapping(ui.categoryEdit, model->fieldIndex("category"));
+
+    connect(ui.durationTable->selectionModel(),
+            &QItemSelectionModel::currentRowChanged,
+            mapper,
+            &QDataWidgetMapper::setCurrentModelIndex);
+    ui.durationTable->setCurrentIndex(model->index(0,0));
 }
 
 void TrayWindow::createActions()
@@ -53,17 +77,6 @@ void TrayWindow::createTrayIcon()
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
-}
-
-void TrayWindow::closeEvent(QCloseEvent *event)
-{
-#ifdef Q_OS_OSX
-    if (!event->spontaneous() || !isVisible()) {
-        return;
-    }
-#endif
-    hide();
-    event->ignore();
 }
 
 #endif

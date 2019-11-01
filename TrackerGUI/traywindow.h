@@ -7,6 +7,18 @@
 
 #include <QDialog>
 #include <QtWidgets>
+#include <QAction>
+#include <QCoreApplication>
+#include <QCloseEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include "dbaccess.h"
+
+#include <iostream>
+
+#include <QtSql>
 
 #include "ui_traywindow.h"
 
@@ -21,15 +33,13 @@ class TrayWindow : public QDialog
 public:
     TrayWindow(QDialog *parent = nullptr);
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
 private:
     void createActions();
     void createTrayIcon();
 
     QLabel *iconLabel;
     Ui::TrayWindow ui;
+    QSqlRelationalTableModel *model;
 
     QAction *minimizeAction;
     QAction *showAction;

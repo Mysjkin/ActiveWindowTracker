@@ -1,3 +1,7 @@
+
+#ifndef DBACCESS_H
+#define DBACCESS_H
+
 #include <QtSql/QtSql>
 #include <QtSql/QSqlDatabase>
 #include <QString>
@@ -33,3 +37,5 @@ public:
 
     ~DbAccess();
 };
+
+#endif

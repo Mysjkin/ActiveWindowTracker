@@ -16,11 +16,12 @@ bool DbAccess::init(){
 
 void DbAccess::updateDurations(){
     QSqlQuery queryGet;
-    std::string selectProcAsDur = "Select p.name, sum(Cast((JulianDay(timeto) - JulianDay(timefrom)) * 24 * 60 As Integer)) "
-                                  "from Processes p " 
-                                  "where (timefrom < timeto and (timefrom > (select d.lastupdated from DURATIONS d where d.name == p.name))) "
-                                  "or p.name not in (select d.name from DURATIONS d) "
-                                  "group by p.name;";
+    std::string selectProcAsDur = 
+        "Select p.name, sum(Cast((JulianDay(timeto) - JulianDay(timefrom)) * 24 * 60 As Integer)) "
+        "from Processes p " 
+        "where (timefrom < timeto and (timefrom > (select d.lastupdated from DURATIONS d where d.name == p.name))) "
+        "or p.name not in (select d.name from DURATIONS d) "
+        "group by p.name;";
     bool prepared = queryGet.prepare(QString::fromStdString(selectProcAsDur));
     if (!prepared){
         throw "Could not prepare" + selectProcAsDur + " sql command";
@@ -29,8 +30,9 @@ void DbAccess::updateDurations(){
         throw "Could not execute " + selectProcAsDur + " sql command";
     }
     
-    std::string insertDurs = "INSERT OR REPLACE INTO DURATIONS (id, name, lastupdated, duration) "
-                             "values ((select id from DURATIONS where name=:name), :name, :lastupdated, :duration);";
+    std::string insertDurs = 
+        "INSERT OR REPLACE INTO DURATIONS (id, name, lastupdated, duration) "
+        "values ((select id from DURATIONS where name=:name), :name, :lastupdated, :duration);";
     while(queryGet.next()){
         QSqlQuery queryInsert;
         QString procName = queryGet.value(0).toString();
