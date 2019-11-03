@@ -41,7 +41,6 @@ fn pause_until_movement(xdo : *const Struct_xdo, curr_x : i32, curr_y : i32){
     let mut is_afk = true;
     let quater_sec = std::time::Duration::from_secs(1);
     while is_afk{
-        //println!("app currently paused. Move cursor to unpause");
         let (ret_has_moved, ret_x, ret_y) = poll_mouse_movement(xdo, curr_x, curr_y);
         if ret_has_moved{
             is_afk = false;
@@ -110,7 +109,7 @@ pub fn track_active_windows(conn : &Connection){
     let mut has_moved = true;
     let mut process_start_time = Local::now();
     let mut pname = "-1".to_string();
-    // xdo_get_active_window is slow find fix later.
+    // xdo_get_active_window is slow find better fix later.
     let collection_granularity = std::time::Duration::from_secs(10);
     while true{
         let (ret_has_moved, ret_x, ret_y) = poll_mouse_movement(xdo, curr_x, curr_y);
@@ -143,7 +142,6 @@ pub fn track_active_windows(conn : &Connection){
             process_start_time = Local::now();
         }
         let process_duration = Local::now() - process_start_time;
-        //println!("{}, {}, {}, {}, {}", has_moved, curr_x, curr_y, pname, process_duration);
 
         thread::sleep(collection_granularity);
     }

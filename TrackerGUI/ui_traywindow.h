@@ -14,8 +14,13 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -28,12 +33,18 @@ public:
     QVBoxLayout *vboxLayout;
     QGroupBox *groupBox;
     QVBoxLayout *vboxLayout1;
+    QTableView *durationTable;
+    QGroupBox *groupBox_1;
+    QFormLayout *formLayout;
+    QLabel *label_1;
+    QLineEdit *categoryEdit;
+    QPushButton *update_1;
 
     void setupUi(QDialog *TrayWindow)
     {
         if (TrayWindow->objectName().isEmpty())
             TrayWindow->setObjectName(QStringLiteral("TrayWindow"));
-        TrayWindow->resize(601, 420);
+        TrayWindow->resize(720, 420);
         centralWidget = new QWidget(TrayWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         vboxLayout = new QVBoxLayout(centralWidget);
@@ -43,7 +54,38 @@ public:
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         vboxLayout1 = new QVBoxLayout(groupBox);
+        vboxLayout1->setSpacing(6);
         vboxLayout1->setObjectName(QStringLiteral("vboxLayout1"));
+        vboxLayout1->setContentsMargins(9, 9, 9, 9);
+        durationTable = new QTableView(groupBox);
+        durationTable->setObjectName(QStringLiteral("durationTable"));
+        durationTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+        vboxLayout1->addWidget(durationTable);
+
+        groupBox_1 = new QGroupBox(groupBox);
+        groupBox_1->setObjectName(QStringLiteral("groupBox_1"));
+        formLayout = new QFormLayout(groupBox_1);
+        formLayout->setObjectName(QStringLiteral("formLayout"));
+        label_1 = new QLabel(groupBox_1);
+        label_1->setObjectName(QStringLiteral("label_1"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, label_1);
+
+        categoryEdit = new QLineEdit(groupBox_1);
+        categoryEdit->setObjectName(QStringLiteral("categoryEdit"));
+        categoryEdit->setEnabled(true);
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, categoryEdit);
+
+
+        vboxLayout1->addWidget(groupBox_1);
+
+        update_1 = new QPushButton(groupBox);
+        update_1->setObjectName(QStringLiteral("update_1"));
+
+        vboxLayout1->addWidget(update_1);
+
 
         vboxLayout->addWidget(groupBox);
 
@@ -57,6 +99,9 @@ public:
     {
         TrayWindow->setWindowTitle(QApplication::translate("TrayWindow", "Tracker UI", Q_NULLPTR));
         groupBox->setTitle(QString());
+        groupBox_1->setTitle(QApplication::translate("TrayWindow", "Change Category", Q_NULLPTR));
+        label_1->setText(QApplication::translate("TrayWindow", "<b>Category:</b>", Q_NULLPTR));
+        update_1->setText(QApplication::translate("TrayWindow", "Update All", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -81,6 +81,13 @@
               </layout>
             </widget>
           </item>
+          <item>
+            <widget class="QPushButton" name="update_1">
+              <property name="text">
+                <string>Update All</string>
+              </property>
+            </widget>
+            </item>
         </layout>
        </widget>
       </item> 

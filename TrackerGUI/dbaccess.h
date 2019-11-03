@@ -9,6 +9,7 @@
 #include <vector>
 #include <chrono>
 #include <ctime>
+#include <utility>
 
 #include <iostream>
 
@@ -32,6 +33,8 @@ public:
     bool init();
 
     void updateDurations();
+
+    void updateCategory(std::vector<std::pair<int, std::string>> categoryPairs);
     
     std::vector<Duration> getAllDurations();
 

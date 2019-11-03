@@ -81,3 +81,7 @@ std::vector<Duration> DbAccess::getAllDurations(){
     }   
     return v;
 }
+
+void DbAccess::updateCategory(std::vector<std::pair<int, std::string>> categoryPairs){
+    throw "Not implemented updateCategory";
+}
