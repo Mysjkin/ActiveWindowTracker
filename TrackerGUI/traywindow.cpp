@@ -21,7 +21,7 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
     setWindowTitle(tr("Process Tracker"));
     resize(720, 480);
     
-    DbAccess* db = new DbAccess("tracker.db", "QSQLITE");
+    db = new DbAccess("tracker.db", "QSQLITE");
 
     if(!db->init())
         QMessageBox::critical(this, "Unable to load database", "Unable to open the database");
@@ -53,6 +53,22 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
             mapper,
             &QDataWidgetMapper::setCurrentModelIndex);
     ui.durationTable->setCurrentIndex(model->index(0,0));
+
+    QObject::connect(ui.bntUpdateAll, SIGNAL(released()), this, SLOT(onClickedUpdate()));
+}
+
+void TrayWindow::onClickedUpdate(){
+    try{
+        db->updateDurations();
+    }
+    catch (const char* msg){
+        QMessageBox::critical(this, "Unable to update durations in database", msg);
+    }
+    int categoryIndex = model->fieldIndex("category");
+    int idIndex = model->fieldIndex("id");
+    QSqlRelation category = model->relation(categoryIndex);
+    QSqlRelation id = model->relation(idIndex);
+    model->submitAll();
 }
 
 void TrayWindow::createActions()

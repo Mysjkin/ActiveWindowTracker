@@ -55,7 +55,6 @@ void DbAccess::updateDurations(){
         }
         queryInsert.clear();
     }
-    
 }
 
 std::vector<Duration> DbAccess::getAllDurations(){
@@ -76,12 +75,41 @@ std::vector<Duration> DbAccess::getAllDurations(){
         std::string lastupdated = queryGet.value(1).toString().toStdString();
         int duration = queryGet.value(2).toString().toInt();
         std::string category = queryGet.value(3).toString().toStdString();
-        Duration d = {name, lastupdated, duration};
+        Duration d = {name, lastupdated, duration, category};
         v.push_back(d);
     }   
     return v;
 }
 
 void DbAccess::updateCategory(std::vector<std::pair<int, std::string>> categoryPairs){
-    throw "Not implemented updateCategory";
+    QSqlQuery updateCategory;
+    std::string updateQuery = "update DURATIONS set category=c where ID=i values (:i, :c);";
+    bool prepared = updateCategory.prepare(QString::fromStdString(updateQuery));
+    if (!prepared){
+        throw "Could not prepare" + updateQuery + " sql command";
+    }
+    for (auto cp : categoryPairs){
+        updateCategory.bindValue(":i", cp.first);
+        updateCategory.bindValue(":c", QString::fromStdString(cp.second));
+        if (!updateCategory.exec()){
+            throw "Could not execute " + updateQuery + " sql command";
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

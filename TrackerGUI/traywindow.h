@@ -33,10 +33,14 @@ class TrayWindow : public QDialog
 public:
     TrayWindow(QDialog *parent = nullptr);
 
+public slots:
+    void onClickedUpdate();
+
 private:
     void createActions();
     void createTrayIcon();
 
+    DbAccess* db;
     QLabel *iconLabel;
     Ui::TrayWindow ui;
     QSqlRelationalTableModel *model;
