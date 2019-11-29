@@ -35,6 +35,7 @@ public:
 
 public slots:
     void onClickedUpdate();
+    void testEvent();
 
 private:
     void createActions();

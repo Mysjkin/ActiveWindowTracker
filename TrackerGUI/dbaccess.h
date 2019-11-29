@@ -35,7 +35,7 @@ public:
     void updateDurations();
 
     void updateCategory(std::vector<std::pair<int, std::string>> categoryPairs);
-    
+
     std::vector<Duration> getAllDurations();
 
     ~DbAccess();

@@ -7,8 +7,6 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
     createActions();
     createTrayIcon();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-
     QIcon icon = QIcon("./images/test.png");
     trayIcon->setIcon(icon);
     trayIcon->show();
@@ -19,7 +17,7 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
     ui.setupUi(this);
 
     setWindowTitle(tr("Process Tracker"));
-    resize(720, 480);
+    resize(900, 480);
     
     db = new DbAccess("tracker.db", "QSQLITE");
 
@@ -54,7 +52,11 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
             &QDataWidgetMapper::setCurrentModelIndex);
     ui.durationTable->setCurrentIndex(model->index(0,0));
 
-    QObject::connect(ui.bntUpdateAll, SIGNAL(released()), this, SLOT(onClickedUpdate()));
+    connect(ui.bntUpdateAll, SIGNAL(released()), this, SLOT(onClickedUpdate()));
+}
+
+void TrayWindow::testEvent(){
+    QMessageBox::critical(this, "Unable to update durations in database", "asd");
 }
 
 void TrayWindow::onClickedUpdate(){
@@ -64,10 +66,6 @@ void TrayWindow::onClickedUpdate(){
     catch (const char* msg){
         QMessageBox::critical(this, "Unable to update durations in database", msg);
     }
-    int categoryIndex = model->fieldIndex("category");
-    int idIndex = model->fieldIndex("id");
-    QSqlRelation category = model->relation(categoryIndex);
-    QSqlRelation id = model->relation(idIndex);
     model->submitAll();
 }
 

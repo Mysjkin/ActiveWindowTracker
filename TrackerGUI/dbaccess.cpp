@@ -60,7 +60,7 @@ void DbAccess::updateDurations(){
 std::vector<Duration> DbAccess::getAllDurations(){
     std::vector<Duration> v;
     QSqlQuery queryGet;
-    std::string selectDurs = "Select name, lastupdated, duration from DURATIONS;";
+    std::string selectDurs = "Select name, lastupdated, duration, category from DURATIONS;";
 
     bool prepared = queryGet.prepare(QString::fromStdString(selectDurs));
     if (!prepared){

@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -38,15 +39,17 @@ public:
     QFormLayout *formLayout;
     QLabel *label_1;
     QLineEdit *categoryEdit;
-    QPushButton *update_1;
+    QPushButton *bntUpdateAll;
+    QGraphicsView *graphicsView;
 
     void setupUi(QDialog *TrayWindow)
     {
         if (TrayWindow->objectName().isEmpty())
             TrayWindow->setObjectName(QStringLiteral("TrayWindow"));
-        TrayWindow->resize(720, 420);
+        TrayWindow->resize(900, 438);
         centralWidget = new QWidget(TrayWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setGeometry(QRect(0, 0, 481, 411));
         vboxLayout = new QVBoxLayout(centralWidget);
         vboxLayout->setSpacing(6);
         vboxLayout->setObjectName(QStringLiteral("vboxLayout"));
@@ -81,14 +84,17 @@ public:
 
         vboxLayout1->addWidget(groupBox_1);
 
-        update_1 = new QPushButton(groupBox);
-        update_1->setObjectName(QStringLiteral("update_1"));
+        bntUpdateAll = new QPushButton(groupBox);
+        bntUpdateAll->setObjectName(QStringLiteral("bntUpdateAll"));
 
-        vboxLayout1->addWidget(update_1);
+        vboxLayout1->addWidget(bntUpdateAll);
 
 
         vboxLayout->addWidget(groupBox);
 
+        graphicsView = new QGraphicsView(TrayWindow);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(510, 40, 361, 271));
 
         retranslateUi(TrayWindow);
 
@@ -101,7 +107,7 @@ public:
         groupBox->setTitle(QString());
         groupBox_1->setTitle(QApplication::translate("TrayWindow", "Change Category", Q_NULLPTR));
         label_1->setText(QApplication::translate("TrayWindow", "<b>Category:</b>", Q_NULLPTR));
-        update_1->setText(QApplication::translate("TrayWindow", "Update All", Q_NULLPTR));
+        bntUpdateAll->setText(QApplication::translate("TrayWindow", "Update All", Q_NULLPTR));
     } // retranslateUi
 
 };
