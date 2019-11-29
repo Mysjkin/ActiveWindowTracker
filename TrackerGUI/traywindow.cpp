@@ -53,10 +53,56 @@ TrayWindow::TrayWindow(QDialog *parent) : QDialog(parent)
     ui.durationTable->setCurrentIndex(model->index(0,0));
 
     connect(ui.bntUpdateAll, SIGNAL(released()), this, SLOT(onClickedUpdate()));
+    
+    createBarChart();
 }
 
 void TrayWindow::testEvent(){
     QMessageBox::critical(this, "Unable to update durations in database", "asd");
+}
+
+void TrayWindow::createBarChart(){
+    std::vector<Duration> durations = db->getAllDurations();
+    std::vector<QBarSet*> sets;
+    std::sort(durations.begin(), durations.end(), 
+        [](const Duration &a, const Duration &b) -> bool{
+            return a.duration > b.duration;
+        });
+
+    int index, maxDuration;
+    index = maxDuration = 0;
+    for (auto d : durations){
+        QBarSet *set = new QBarSet(QString::fromStdString(d.name));
+        *set << d.duration;
+        sets.push_back(set);
+        if (maxDuration < d.duration) maxDuration = d.duration;
+        if (++index > 2) break;
+    }
+    std::vector<QBarSeries*> barSeries;
+    for (auto s : sets){
+        QBarSeries *series = new QBarSeries();
+        series->append(s);
+        barSeries.push_back(series);
+    }
+
+    QChart *chart = new QChart();
+    chart->setTitle("Top three most used applications");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+
+    QValueAxis *axisY = new QValueAxis();
+    axisY->setRange(0,maxDuration + 1);
+    chart->addAxis(axisY, Qt::AlignLeft);
+
+    for (auto s : barSeries){
+        chart->addSeries(s);
+        s->attachAxis(axisY);
+    }
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    ui.barChart1->setChart(chart);
+    ui.barChart1->setRenderHint(QPainter::Antialiasing);
 }
 
 void TrayWindow::onClickedUpdate(){
@@ -67,6 +113,7 @@ void TrayWindow::onClickedUpdate(){
         QMessageBox::critical(this, "Unable to update durations in database", msg);
     }
     model->submitAll();
+    createBarChart();
 }
 
 void TrayWindow::createActions()

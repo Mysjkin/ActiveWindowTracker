@@ -15,10 +15,19 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include "dbaccess.h"
+#include <algorithm>
 
 #include <iostream>
 
 #include <QtSql>
+
+#include <QtCharts>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
 
 #include "ui_traywindow.h"
 
@@ -40,6 +49,7 @@ public slots:
 private:
     void createActions();
     void createTrayIcon();
+    void createBarChart();
 
     DbAccess* db;
     QLabel *iconLabel;

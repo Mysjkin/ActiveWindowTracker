@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -24,6 +23,7 @@
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "qchartview.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -40,7 +40,7 @@ public:
     QLabel *label_1;
     QLineEdit *categoryEdit;
     QPushButton *bntUpdateAll;
-    QGraphicsView *graphicsView;
+    QChartView *barChart1;
 
     void setupUi(QDialog *TrayWindow)
     {
@@ -92,9 +92,9 @@ public:
 
         vboxLayout->addWidget(groupBox);
 
-        graphicsView = new QGraphicsView(TrayWindow);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(510, 40, 361, 271));
+        barChart1 = new QChartView(TrayWindow);
+        barChart1->setObjectName(QStringLiteral("barChart1"));
+        barChart1->setGeometry(QRect(500, 30, 371, 371));
 
         retranslateUi(TrayWindow);
 
