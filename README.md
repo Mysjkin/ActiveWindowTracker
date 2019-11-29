@@ -1,4 +1,4 @@
 # Window Tracker
 Tracks active windows
 ## Demo
-![alt text](https://github.com/Mysjkin/ActiveWindowTracker/blob/master/TrackerGUI/images/demo1.png =100x100)
+![alt text](https://github.com/Mysjkin/ActiveWindowTracker/blob/master/TrackerGUI/images/demo1.png | width=100)
