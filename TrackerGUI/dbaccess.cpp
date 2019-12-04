@@ -40,8 +40,10 @@ void DbAccess::updateDurations(){
 
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t tnow = std::chrono::system_clock::to_time_t(now);
-        std::string nowStr = std::ctime(&tnow);
-        QString nowQStr = QString::fromStdString(nowStr);
+        tm* curr_tm;
+        char time_now_str[100];
+        strftime(time_now_str, 50, "%Y-%m-%d %H:%M:%S %z", curr_tm);
+        QString nowQStr = QString::fromStdString(time_now_str);
 
         prepared = queryInsert.prepare(QString::fromStdString(insertDurs));
         queryInsert.bindValue(":name", procName);
